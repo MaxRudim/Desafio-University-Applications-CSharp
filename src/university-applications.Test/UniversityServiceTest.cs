@@ -14,7 +14,7 @@ public class UniversityServiceTest
 
     var universityService = new UniversityService(mockClient.Object);
 
-    var result = await universityService.FindUniversity("middle", "turkey");
+    var result = await universityService.FindUniversity("federal", "Brazil");
 
     result.Should().BeOfType<JsonElement>();
     result.ToString().Should().Contain("web_page");
@@ -30,7 +30,7 @@ public class UniversityServiceTest
 
     var universityService = new UniversityService(mockClient.Object);
 
-    var result = await universityService.FindUniversity("turkey");
+    var result = await universityService.FindUniversity("Brazil");
 
     result.Should().BeOfType<JsonElement>();
     result.ToString().Should().Contain("web_page");
