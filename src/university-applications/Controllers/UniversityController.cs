@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using university_applications.Services;
 
 namespace university_applications.Controllers
 {
@@ -6,9 +7,38 @@ namespace university_applications.Controllers
   [Route("university")]
   public class UniversityController : ControllerBase, IUniversityController
   {
-    public UniversityController()
+    private readonly IUniversityService _service;
+    public UniversityController(IUniversityService service)
     {
-      throw new System.NotImplementedException();
+      _service = service;
+    }
+
+    [HttpGet]
+    [Route("{name}/{country}")]
+    public ActionResult FindUniversity(string country, string name)
+    {
+        var universities = _service.FindUniversity(name, country);
+
+        if (universities.Result == null)
+        {
+          return NotFound();
+        }
+
+        return Ok(universities.Result);
+    }
+
+    [HttpGet]
+    [Route("{country}")]
+    public ActionResult FindUniversity(string country)
+    {
+      var universities = _service.FindUniversity(country);
+
+      if (universities.Result == null)
+      {
+        return NotFound();
+      }
+
+        return Ok(universities.Result);
     }
   }
 }
